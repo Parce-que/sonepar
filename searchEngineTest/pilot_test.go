@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"testing"
 
@@ -61,7 +62,7 @@ func iLookForWords(word string) error {
 
 	return nil
 }
-func iClickSearchButton() error[{
+func iClickSearchButton() error {
 	// Click the search button.
 	btn, err := wd.FindElement(selenium.ByCSSSelector, "#run")
 	if err != nil {
@@ -75,13 +76,13 @@ func iClickSearchButton() error[{
 }
 
 func iShouldSeeWords(word string) error {
-// Wait for the program to finish running and get the output.
-outputDiv, err := wd.FindElement(selenium.ByCSSSelector, "#output")
-if err != nil {
-	panic(err) // TODO
-}
-fmt.Println(outputDiv)
-// TODO : Check output and words in there
+	// Wait for the program to finish running and get the output.
+	outputDiv, err := wd.FindElement(selenium.ByCSSSelector, "#output")
+	if err != nil {
+		panic(err) // TODO
+	}
+	fmt.Println(outputDiv)
+	// TODO : Check output and words in there
 	return nil
 }
 
