@@ -1,6 +1,7 @@
 FROM golang:1.16.3-stretch
 RUN go get github.com/cucumber/godog/cmd/godog@v0.11.0
 RUN go get -t -d github.com/tebeka/selenium
+RUN cd /go & mkdir sonepar
 
 RUN cd /home
 RUN git clone https://github.com/cucumber/godog.git

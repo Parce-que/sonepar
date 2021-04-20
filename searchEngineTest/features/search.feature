@@ -2,8 +2,8 @@ Scenario Outline: Looking for words
 
 Given I am on a new pages of "searchEngine"
 When I look for "words"
-Then I should have a "200" http code
-And I should see the "words" in the resulting page
+And I click the search button
+Then I should see the "words" in the resulting page
 
 Examples :
             | words           | searchEngine |

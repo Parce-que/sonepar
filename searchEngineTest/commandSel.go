@@ -1,4 +1,4 @@
-package selenium_test
+package main
 
 import (
 	"fmt"
@@ -9,13 +9,13 @@ import (
 
 // TODO add Variable depending from the gherkin test
 
-func Example() {
+func getWebdriver() WebDriver {
 	// Start a Selenium WebDriver server instance (if one is not already
 	// running).
 	const (
 		// To change to dockers path
-		seleniumPath    = "vendor/selenium-server-standalone-3.4.jar"
-		geckoDriverPath = "vendor/geckodriver-v0.18.0-linux64"
+		seleniumPath    = "selenium server"
+		geckoDriverPath = "geckodriver-v0.18.0-linux64"
 		port            = 8080
 	)
 	opts := []selenium.ServiceOption{
@@ -37,38 +37,5 @@ func Example() {
 		panic(err)
 	}
 	defer wd.Quit()
-
-	// Navigate to google <- to change to a variable
-	if err := wd.Get("https://www.google.com/"); err != nil {
-		panic(err) // TODO
-	}
-
-	// Get a reference to the text box containing code.
-	elem, err := wd.FindElement(selenium.ByCSSSelector, "#code")
-	if err != nil {
-		panic(err) // TODO
-	}
-
-	// Enter variable in text box.
-	err = elem.SendKeys(`oiseau`)
-	if err != nil {
-		panic(err) // TODO
-	}
-
-	// Click the search button.
-	btn, err := wd.FindElement(selenium.ByCSSSelector, "#run")
-	if err != nil {
-		panic(err) // TODO
-	}
-	if err := btn.Click(); err != nil {
-		panic(err) // TODO
-	}
-
-	// Wait for the program to finish running and get the output.
-	outputDiv, err := wd.FindElement(selenium.ByCSSSelector, "#output")
-	if err != nil {
-		panic(err) // TODO
-	}
-	fmt.Println(outputDiv)
-	// TODO : Check output and words in there
+	return wd
 }
