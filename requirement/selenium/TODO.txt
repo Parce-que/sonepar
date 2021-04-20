@@ -1,0 +1,2 @@
+Add docker compose file to link selenium and godog dockers.
+Godog docker should be able to access and control selenium docker.
