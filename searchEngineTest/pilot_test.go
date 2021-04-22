@@ -12,6 +12,7 @@ import (
 )
 
 var opts = godog.Options{Output: colors.Colored(os.Stdout)}
+var wd = getWebdriver()
 
 func init() {
 	godog.BindCommandLineFlags("godog.", &opts)
@@ -29,20 +30,20 @@ func TestMain(m *testing.M) {
 	}.Run()
 
 	os.Exit(status)
-	wd := getWebdriver()
 
+}
 
-func iAmOnANewSearchPage(engine string) error {
+func iAmOnANewPagesOf(wd selenium.WebDriver, sEngine string) error {
 	// go to engine
 	// Navigate to google <- to change to a variable
 	if err := wd.Get("https://www.google.com/"); err != nil {
 		panic(err) // TODO
 	}
 
-	return nil
+	return godog.ErrPending
 }
 
-func iLookForWords(word string) error {
+func iLookFor(wd selenium.WebDriver, word string) error {
 	// Get a reference to the text field containing search.
 	elem, err := wd.FindElement(selenium.ByCSSSelector, "#search")
 	if err != nil {
@@ -61,9 +62,10 @@ func iLookForWords(word string) error {
 		panic(err) // TODO
 	}
 
-	return nil
+	return godog.ErrPending
 }
-func iClickSearchButton() error {
+
+func iClickTheSearchButton(wd selenium.WebDriver) error {
 	// Click the search button.
 	btn, err := wd.FindElement(selenium.ByCSSSelector, "#run")
 	if err != nil {
@@ -73,10 +75,10 @@ func iClickSearchButton() error {
 		panic(err) // TODO
 	}
 
-	return nil
+	return godog.ErrPending
 }
 
-func iShouldSeeWords(word string) error {
+func iShouldSeeTheInTheResultingPage(wd selenium.WebDriver, word string) error {
 	// Wait for the program to finish running and get the output.
 
 	outputDiv, err := wd.FindElement(selenium.ByCSSSelector, "#output")
@@ -85,7 +87,7 @@ func iShouldSeeWords(word string) error {
 	}
 	fmt.Println(outputDiv)
 	// TODO : Check output and words in there
-	return nil
+	return godog.ErrPending
 }
 
 // Settings the data first -- not needed here
@@ -94,13 +96,8 @@ func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 }
 
 func InitializeScenario(ctx *godog.ScenarioContext) {
-	ctx.BeforeScenario(func(*godog.Scenario) {
-	})
-
-	ctx.Step(`^I am on a new pages of ""$`, iAmOnANewSearchPage) //TODO REGEX
-	ctx.Step(`^I look for "words"$`, iLookForWords)
-	ctx.Step(`^I I click the search button$`, iClickSearchButton)
-	// ctx.Step(`^I should have a "200" http code$`, iShouldHaveHttpCode) <- selenium can't do that it seems
-	ctx.Step(`^I should see the "words" in the resulting page$`, iShouldSeeWords)
-}
+	ctx.Step(`^I am on a new pages of "([^"]*)"$`, iAmOnANewPagesOf)
+	ctx.Step(`^I click the search button$`, iClickTheSearchButton)
+	ctx.Step(`^I look for "([^"]*)"$`, iLookFor)
+	ctx.Step(`^I should see the "([^"]*)" in the resulting page$`, iShouldSeeTheInTheResultingPage)
 }
