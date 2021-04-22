@@ -8,6 +8,7 @@ import (
 	"github.com/cucumber/godog"
 	"github.com/cucumber/godog/colors"
 	flag "github.com/spf13/pflag"
+	"github.com/tebeka/selenium"
 )
 
 var opts = godog.Options{Output: colors.Colored(os.Stdout)}
@@ -29,7 +30,7 @@ func TestMain(m *testing.M) {
 
 	os.Exit(status)
 	wd := getWebdriver()
-}
+
 
 func iAmOnANewSearchPage(engine string) error {
 	// go to engine
@@ -101,4 +102,5 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^I I click the search button$`, iClickSearchButton)
 	// ctx.Step(`^I should have a "200" http code$`, iShouldHaveHttpCode) <- selenium can't do that it seems
 	ctx.Step(`^I should see the "words" in the resulting page$`, iShouldSeeWords)
+}
 }

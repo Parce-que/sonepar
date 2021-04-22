@@ -9,7 +9,7 @@ import (
 
 // TODO add Variable depending from the gherkin test
 
-func getWebdriver() WebDriver {
+func getWebdriver() selenium.WebDriver {
 	// Start a Selenium WebDriver server instance (if one is not already
 	// running).
 	const (
@@ -38,4 +38,5 @@ func getWebdriver() WebDriver {
 	}
 	defer wd.Quit()
 	return wd
+
 }
