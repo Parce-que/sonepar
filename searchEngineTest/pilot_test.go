@@ -77,6 +77,7 @@ func iClickSearchButton() error {
 
 func iShouldSeeWords(word string) error {
 	// Wait for the program to finish running and get the output.
+
 	outputDiv, err := wd.FindElement(selenium.ByCSSSelector, "#output")
 	if err != nil {
 		panic(err) // TODO
